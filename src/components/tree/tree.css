@@ -1,0 +1,26 @@
+li {
+    &.root {
+        display: flex;
+        align-items: center;
+        height: 4rem;
+        z-index:10;
+        overflow:hidden;
+        position: relative;
+        border-radius: 25%;
+        padding-left:1em;
+
+        &::before {
+            content: "";
+            z-index:-10;
+            background-image: url('/src/assets/root.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            position:absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            opacity: 0.4;
+        }
+    }
+}

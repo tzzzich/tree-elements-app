@@ -48,7 +48,7 @@ const TreeNode = forwardRef(({ id, passedChildren, nextId, onClick}, ref) => {
                     nextId={nextId} onClick={onClick} 
                 />
             ))}
-            <NameChangeModal show={showModal} toggleModal={toggleModal}  onSubmit={onSubmit}/>
+            <NameChangeModal baseName={nodeName} show={showModal} toggleModal={toggleModal}  onSubmit={onSubmit}/>
             
         </ul>
     );

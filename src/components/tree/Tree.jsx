@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import Controls from "./controls/Controls";
-import RootNode from "./tree-node/RootNode";
+import Controls from "../controls/Controls";
+import RootNode from "../tree-node/RootNode";
+import './tree.css'
 
 
 const initialRootNodeState = {
