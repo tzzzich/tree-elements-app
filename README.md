@@ -3,8 +3,8 @@
 The project consists of two variations of implementing a hierarchical tree structure within a React applicantion. 
 Each variation is set in its corresponding branch:
 
-### node-list-variation *(unfinished - no editNode method)*
-- Implementation based on manipulating a list of tree nodes, each having a direct link to the parent component.
+### node-list-variation 
+- Implementation based on manipulating the stateful list of all tree nodes.
 - Changes primarily managed through a `useState` hook of the root component.
 
 ### node-non-list-variation
