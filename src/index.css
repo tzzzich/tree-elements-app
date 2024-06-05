@@ -1,0 +1,53 @@
+@import './reset.css';
+
+:root {
+  --green-color: #B5C18E;
+  --beige-color: #EADBC8;
+  --font-color: #776B5D;
+  --main-bg-color: #F1F1F1;
+
+}
+
+body {
+  background-color: var(--main-bg-color);
+
+  font-family: Tahoma, Verdana, sans-serif;
+  font-size: 1.3rem;
+  color: var(--font-color);
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 2em;
+  margin-top: 1rem;
+}
+
+li {
+  cursor: pointer;
+
+  margin-bottom: 0.5rem; 
+  transition: all 0.5s;
+
+  &:hover, &:focus {
+    color: var(--green-color);
+    transition: all 0.5s;
+  }
+}
+
+
+button {
+  cursor: pointer;
+
+  background-color: var(--beige-color);
+  border: none;
+  color: var(--text-color);
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  transition: all 0.5s;
+
+  &:hover {
+    color: var(--green-color);
+    transition: all 0.5s;
+  }
+}
