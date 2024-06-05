@@ -18,7 +18,6 @@ function Tree() {
     const [nodes, setNodes] = useState([BaseNode])
 
     const addChild = () => {
-        console.log(currId)
         id.current++;
         const newChild = {
             id: id.current,
@@ -27,8 +26,8 @@ function Tree() {
 
         };
         const newNodes = [...nodes];
-        const updateNodes = (newNodes, currId, newChild) => {
-            return newNodes.map(node => {
+        const updateNodes = (nodes) => {
+            return nodes.map(node => {
                 if (node.id === currId) {
                     return {
                         ...node,
@@ -37,14 +36,14 @@ function Tree() {
                 } else if (node.children.length > 0) {
                     return {
                         ...node,
-                        children: updateNodes(node.children, currId, newChild)
+                        children: updateNodes(node.children)
                     };
                 }
                 return node;
             });
         };
 
-        setNodes(updateNodes(newNodes, currId, newChild));
+        setNodes(updateNodes(newNodes));
     };
 
     const handleClick = (index) => {
@@ -57,41 +56,24 @@ function Tree() {
     //   }
     // };  
 
-    // const handleDeleteNode = (nodeRef) => {
-    //     if (nodeRef) lastClickedNodeRef.current = nodeRef;
-    //     if (lastClickedNodeRef.current) {
-    //         const stack = [lastClickedNodeRef.current];
-    
-    //         while (stack.length > 0) {
-    //             const currentNodeRef = stack.pop();
-    //             const currentNode = currentNodeRef.node;
-    
-    //             if (currentNodeRef.children) {
-    //                 for (const child of currentNodeRef.children) {
-    //                     stack.push(child.ref.current);
-    //                 }
-    //             }
-    //             if (currentNode && currentNode.remove) {
-    //                 if (currentNode.id != rootNode.id) {
-    //                     const parentNode = currentNode.parentNode;
-    //                     if (parentNode && parentNode.remove) {
-    //                         parentNode.remove(); 
-    //                     }
-    //                     currentNode.remove();
-    //                 } 
-    //             }
-    //         }
-  
-    //         lastClickedNodeRef.current = null;
-    //     }
-    // };
+    const handleDeleteNode = () => {
+        const newNodes = [...nodes];
+        const updateNodes = (nodes) => {
+            return nodes
+                .filter(node => node.id !== currId)
+                .map(node => ({
+                    ...node,
+                    children: updateNodes(node.children)
+                }));
+        };
+        setNodes(updateNodes(newNodes));
+    };
 
-    // const resetTree = () => {
-    //     handleDeleteNode(rootNode.ref.current);
+    const resetTree = () => {
+        setNodes([BaseNode]);
 
-    //     idRef.current = 1;
-    //     lastClickedNodeRef.current = null;
-    // };
+        id.current = 0;
+    };
   
     return (
         <>
@@ -108,8 +90,8 @@ function Tree() {
             <Controls 
                addChild={addChild}
             //   edit={editNode}
-            //   removeNode={handleDeleteNode}
-            //   resetTree={resetTree}
+               removeNode={handleDeleteNode}
+               resetTree={resetTree}
             />
         </>
     );
