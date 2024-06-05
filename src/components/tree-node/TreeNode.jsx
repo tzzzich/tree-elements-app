@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import NameChangeModal from "../NameChangeModal";
 
 const TreeNode = ({ id, passedChildren, onClick, name }) => {
     const [children, setChildren] = useState(passedChildren);
@@ -7,11 +6,9 @@ const TreeNode = ({ id, passedChildren, onClick, name }) => {
 
     useEffect(() => {
         setChildren(passedChildren);
-    }, [passedChildren]);
-    useEffect(() => {
-        setNodeName(nodeName);
-    }, [name]);
-
+        setNodeName(name);
+    }, [passedChildren, name]);
+    
     return (
         <ul>
             <li tabIndex='0' id={id} onClick={() => onClick(id)}>{nodeName}</li>
