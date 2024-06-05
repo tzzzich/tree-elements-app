@@ -1,59 +1,31 @@
-import React, { useState, useRef, forwardRef, useImperativeHandle } from "react";
+import React, { useState, useEffect } from "react";
 import NameChangeModal from "../NameChangeModal";
 
-const TreeNode = forwardRef(({ id, passedChildren, nextId, onClick}, ref) => {
+const TreeNode = ({ id, passedChildren, onClick, name }) => {
     const [children, setChildren] = useState(passedChildren);
-    const [showModal, setShowModal] = useState(false);
-    const [nodeName, setNodeName] = useState("Node " + id);
-    const nodeRef = useRef(null)
+    const [nodeName, setNodeName] = useState(name);
 
-    function toggleModal() {
-        setShowModal(!showModal);
-    }
-
-    function onSubmit(event) {
-        event.preventDefault();
-        setNodeName(event.target.name.value);
-        toggleModal();
-    }
-
-    useImperativeHandle(ref, () => ({
-        node: nodeRef.current,
-        children: children,
-        addChild: () => {
-            const newChildId = nextId();
-            const newChild = {
-                id: newChildId,
-                children: [],
-                ref: React.createRef(),
-            };
-            setChildren(prevChildren => [...prevChildren, newChild]);
-        },
-        edit: () => {
-            toggleModal();
-        },
-    }));
-
-    function handleClick() {
-        if (onClick) {
-            onClick(ref);
-        }
-    }
+    useEffect(() => {
+        setChildren(passedChildren);
+    }, [passedChildren]);
+    useEffect(() => {
+        setNodeName(nodeName);
+    }, [name]);
 
     return (
         <ul>
-            <li tabIndex='0' id={id} onClick={handleClick} ref={nodeRef}>{nodeName}</li>
+            <li tabIndex='0' id={id} onClick={() => onClick(id)}>{nodeName}</li>
             {children.map(child => (
-                <TreeNode key={child.id} ref={child.ref} id={child.id} passedChildren={child.children} 
-                    nextId={nextId} onClick={onClick} 
+                <TreeNode 
+                    key={child.id} 
+                    id={child.id} 
+                    passedChildren={child.children}
+                    onClick={onClick}
+                    name={child.name}
                 />
             ))}
-            <NameChangeModal show={showModal} toggleModal={toggleModal}  onSubmit={onSubmit}/>
-            
         </ul>
     );
-});
+};
 
 export default TreeNode;
-
-
